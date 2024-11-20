@@ -1,0 +1,15 @@
+<resources>
+    <string name="app_name">Cadastro de Alunos</string>
+    <string name="go_to_register">Ir para Cadastro de Aluno</string>
+    <string name="go_to_list">Ir para Lista de Alunos</string>
+    <string name="fetch_zip">Buscar Endereço pelo CEP</string>
+    <string name="save_student">Salvar Aluno</string>
+    <string name="student_name">Nome do Aluno</string>
+    <string name="student_ra">RA do Aluno</string>
+    <string name="student_zip">CEP</string>
+    <string name="student_street">Logradouro</string>
+    <string name="student_complement">Complemento</string>
+    <string name="student_neighborhood">Bairro</string>
+    <string name="student_city">Cidade</string>
+    <string name="student_state">Estado</string>
+</resources>

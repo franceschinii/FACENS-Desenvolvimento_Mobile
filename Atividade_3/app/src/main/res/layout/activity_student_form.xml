@@ -1,0 +1,72 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nome do Aluno" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtRa"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="RA do Aluno" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="CEP" />
+
+        <Button
+            android:id="@+id/btnFetchZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscar Endereço pelo CEP" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtStreet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Logradouro" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtComplement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Complemento" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtNeighborhood"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Bairro" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Cidade" />
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edtState"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Estado" />
+
+        <Button
+            android:id="@+id/btnSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Salvar Aluno" />
+    </LinearLayout>
+</ScrollView>

@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <ScrollView
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -9,64 +10,92 @@
         android:layout_height="wrap_content"
         android:orientation="vertical">
 
+        <!-- Nome -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtName"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Nome do Aluno" />
+            android:hint="Nome do Estudante"
+            android:inputType="textPersonName" />
 
+        <!-- RA -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtRa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="RA do Aluno" />
+            android:hint="RA"
+            android:inputType="number" />
 
+        <!-- CEP -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtZip"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="CEP" />
+            android:hint="CEP"
+            android:inputType="number" />
 
-        <Button
-            android:id="@+id/btnFetchZip"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Buscar Endereço pelo CEP" />
-
+        <!-- Logradouro -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtStreet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Logradouro" />
+            android:hint="Logradouro"
+            android:inputType="text" />
 
+        <!-- Complemento -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtComplement"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Complemento" />
+            android:hint="Complemento"
+            android:inputType="text" />
 
+        <!-- Bairro -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtNeighborhood"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Bairro" />
+            android:hint="Bairro"
+            android:inputType="text" />
 
+        <!-- Cidade -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Cidade" />
+            android:hint="Cidade"
+            android:inputType="text" />
 
+        <!-- Estado -->
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/edtState"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Estado" />
+            android:hint="Estado"
+            android:inputType="text" />
 
+        <!-- Botão para buscar CEP -->
+        <Button
+            android:id="@+id/btnFetchZip"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Buscar CEP"
+            android:layout_marginTop="16dp" />
+
+        <!-- Botão para salvar estudante -->
         <Button
             android:id="@+id/btnSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Salvar Aluno" />
+            android:text="Salvar Estudante"
+            android:layout_marginTop="16dp" />
+        <!-- Botão Voltar -->
+        <Button
+            android:id="@+id/btnBack"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Back"
+            android:layout_marginTop="16dp" />
+
     </LinearLayout>
 </ScrollView>

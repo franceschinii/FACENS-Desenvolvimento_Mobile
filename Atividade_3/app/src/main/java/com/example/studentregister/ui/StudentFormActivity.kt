@@ -2,16 +2,17 @@ package com.example.studentregister.ui
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.example.studentregister.R
-import com.google.android.material.textfield.TextInputEditText
 import com.example.studentregister.api.ApiClient
 import com.example.studentregister.api.StudentService
 import com.example.studentregister.api.ZipCodeService
 import com.example.studentregister.model.Address
 import com.example.studentregister.model.Student
+import com.google.android.material.textfield.TextInputEditText
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -32,6 +33,14 @@ class StudentFormActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_form)
+
+        val btnBack = findViewById<Button>(R.id.btnBack)
+        btnBack.setOnClickListener {
+            finish() // Finaliza a atividade atual e volta à anterior
+        }
+
+        // Habilitar botão de voltar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
         edtName = findViewById(R.id.edtName)
         edtRa = findViewById(R.id.edtRa)
@@ -134,5 +143,15 @@ class StudentFormActivity : AppCompatActivity() {
                 ).show()
             }
         })
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            android.R.id.home -> {
+                onBackPressed()
+                true
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
     }
 }

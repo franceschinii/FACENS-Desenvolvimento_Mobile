@@ -7,9 +7,9 @@ import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface StudentService {
-    @GET("Student")
+    @GET("Students")
     fun listStudents(): Call<List<Student>>
 
-    @POST("Student")
+    @POST("Students")
     fun saveStudent(@Body student: Student): Call<Student>
 }

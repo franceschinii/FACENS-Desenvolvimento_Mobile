@@ -74,12 +74,17 @@ class StudentFormActivity : AppCompatActivity() {
                         edtState.setText(it.state)
                     }
                 } else {
-                    Toast.makeText(this@StudentFormActivity, "ZIP not found", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@StudentFormActivity, "ZIP not found", Toast.LENGTH_SHORT)
+                        .show()
                 }
             }
 
             override fun onFailure(call: Call<Address>, t: Throwable) {
-                Toast.makeText(this@StudentFormActivity, "Failed to fetch ZIP: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@StudentFormActivity,
+                    "Failed to fetch ZIP: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }
@@ -94,28 +99,39 @@ class StudentFormActivity : AppCompatActivity() {
         val city = edtCity.text.toString()
         val state = edtState.text.toString()
 
-        if (name.isEmpty() || ra == null || zip.isEmpty() || street.isEmpty() || neighborhood.isEmpty() || city.isEmpty() || state.isEmpty()) {
+        if (name.isBlank() || ra == null || zip.isBlank() || street.isBlank() || neighborhood.isBlank() || city.isBlank() || state.isBlank()) {
             Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
             return
         }
 
         val student = Student(name, ra, zip, street, complement, neighborhood, city, state)
-
-        val service = ApiClient.getInstance("https://673b9deb96b8dcd5f3f6f2d4.mockapi.io/")
+        val service = ApiClient.getInstance("https://673d4c710118dbfe8606cbfc.mockapi.io/")
             .create(StudentService::class.java)
 
         service.saveStudent(student).enqueue(object : Callback<Student> {
             override fun onResponse(call: Call<Student>, response: Response<Student>) {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@StudentFormActivity, "Student saved successfully!", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@StudentFormActivity,
+                        "Student saved successfully!",
+                        Toast.LENGTH_SHORT
+                    ).show()
                     startActivity(Intent(this@StudentFormActivity, StudentListActivity::class.java))
                 } else {
-                    Toast.makeText(this@StudentFormActivity, "Error saving student", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(
+                        this@StudentFormActivity,
+                        "Error saving student",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<Student>, t: Throwable) {
-                Toast.makeText(this@StudentFormActivity, "Network error: ${t.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    this@StudentFormActivity,
+                    "Network error: ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }

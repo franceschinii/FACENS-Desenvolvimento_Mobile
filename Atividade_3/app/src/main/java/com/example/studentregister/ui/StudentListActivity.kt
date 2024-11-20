@@ -27,19 +27,26 @@ class StudentListActivity : AppCompatActivity() {
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
+        // Inicialize o adapter com uma lista vazia antes de buscar os dados
+        adapter = StudentAdapter(emptyList())
+        recyclerView.adapter = adapter
+
         fetchStudents()
     }
 
     private fun fetchStudents() {
-        val service = ApiClient.getInstance("https://673b9deb96b8dcd5f3f6f2d4.mockapi.io/")
+        val service = ApiClient.getInstance("https://673d4c710118dbfe8606cbfc.mockapi.io/")
             .create(StudentService::class.java)
 
         service.listStudents().enqueue(object : Callback<List<Student>> {
             override fun onResponse(call: Call<List<Student>>, response: Response<List<Student>>) {
                 if (response.isSuccessful) {
-                    response.body()?.let { students ->
+                    val students = response.body()
+                    if (!students.isNullOrEmpty()) {
                         adapter = StudentAdapter(students)
                         recyclerView.adapter = adapter
+                    } else {
+                        Toast.makeText(this@StudentListActivity, "No students found", Toast.LENGTH_SHORT).show()
                     }
                 } else {
                     Toast.makeText(this@StudentListActivity, "Error fetching students", Toast.LENGTH_SHORT).show()

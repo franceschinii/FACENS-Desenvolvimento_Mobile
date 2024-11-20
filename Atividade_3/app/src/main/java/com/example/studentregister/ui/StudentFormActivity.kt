@@ -76,22 +76,26 @@ class StudentFormActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val address = response.body()
                     address?.let {
-                        edtStreet.setText(it.street)
-                        edtComplement.setText(it.complement)
-                        edtNeighborhood.setText(it.neighborhood)
-                        edtCity.setText(it.city)
-                        edtState.setText(it.state)
+                        // Atualize apenas os campos que não estão vazios
+                        if (!it.street.isNullOrBlank()) edtStreet.setText(it.street)
+                        if (!it.complement.isNullOrBlank()) edtComplement.setText(it.complement)
+                        if (!it.neighborhood.isNullOrBlank()) edtNeighborhood.setText(it.neighborhood)
+                        if (!it.city.isNullOrBlank()) edtCity.setText(it.city)
+                        if (!it.state.isNullOrBlank()) edtState.setText(it.state)
                     }
                 } else {
-                    Toast.makeText(this@StudentFormActivity, "ZIP not found", Toast.LENGTH_SHORT)
-                        .show()
+                    Toast.makeText(
+                        this@StudentFormActivity,
+                        "CEP não encontrado",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 
             override fun onFailure(call: Call<Address>, t: Throwable) {
                 Toast.makeText(
                     this@StudentFormActivity,
-                    "Failed to fetch ZIP: ${t.message}",
+                    "Erro ao buscar CEP: ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -99,21 +103,26 @@ class StudentFormActivity : AppCompatActivity() {
     }
 
     private fun saveStudent() {
-        val name = edtName.text.toString()
+        val name = edtName.text.toString().trim()
         val ra = edtRa.text.toString().toIntOrNull()
-        val zip = edtZip.text.toString()
-        val street = edtStreet.text.toString()
-        val complement = edtComplement.text.toString()
-        val neighborhood = edtNeighborhood.text.toString()
-        val city = edtCity.text.toString()
-        val state = edtState.text.toString()
+        val zip = edtZip.text.toString().trim()
+        val street = edtStreet.text.toString().trim()
+        val complement = edtComplement.text.toString().trim()
+        val neighborhood = edtNeighborhood.text.toString().trim()
+        val city = edtCity.text.toString().trim()
+        val state = edtState.text.toString().trim()
 
+        // Verifique se todos os campos obrigatórios estão preenchidos
         if (name.isBlank() || ra == null || zip.isBlank() || street.isBlank() || neighborhood.isBlank() || city.isBlank() || state.isBlank()) {
-            Toast.makeText(this, "Please fill in all required fields", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Preencha todos os campos obrigatórios", Toast.LENGTH_SHORT).show()
             return
         }
 
         val student = Student(name, ra, zip, street, complement, neighborhood, city, state)
+
+        // Adicione um log para verificar os dados que estão sendo enviados
+        println("Dados do estudante: $student")
+
         val service = ApiClient.getInstance("https://673d4c710118dbfe8606cbfc.mockapi.io/")
             .create(StudentService::class.java)
 
@@ -122,14 +131,16 @@ class StudentFormActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     Toast.makeText(
                         this@StudentFormActivity,
-                        "Student saved successfully!",
+                        "Estudante salvo com sucesso!",
                         Toast.LENGTH_SHORT
                     ).show()
                     startActivity(Intent(this@StudentFormActivity, StudentListActivity::class.java))
                 } else {
+                    // Adicione um log para verificar a resposta do erro
+                    println("Erro na resposta: ${response.errorBody()?.string()}")
                     Toast.makeText(
                         this@StudentFormActivity,
-                        "Error saving student",
+                        "Erro ao salvar estudante",
                         Toast.LENGTH_SHORT
                     ).show()
                 }
@@ -138,7 +149,7 @@ class StudentFormActivity : AppCompatActivity() {
             override fun onFailure(call: Call<Student>, t: Throwable) {
                 Toast.makeText(
                     this@StudentFormActivity,
-                    "Network error: ${t.message}",
+                    "Erro de rede: ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

@@ -1,17 +1,17 @@
 package com.example.studentregister.ui
 
 import android.os.Bundle
-import android.view.MenuItem
 import android.widget.Button
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.studentregister.R
+import com.example.studentregister.adapter.StudentAdapter
 import com.example.studentregister.api.ApiClient
 import com.example.studentregister.api.StudentService
-import com.example.studentregister.R
 import com.example.studentregister.model.Student
-import com.example.studentregister.adapter.StudentAdapter
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -25,20 +25,21 @@ class StudentListActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_student_list)
 
-        // Habilitar botão de voltar
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-
-        // Botão de Voltar no layout
         val btnBack = findViewById<Button>(R.id.btnBack)
         btnBack.setOnClickListener {
             finish() // Finaliza a atividade atual e volta à anterior
         }
 
+        // Habilitar botão de voltar
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+
         recyclerView = findViewById(R.id.recyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this)
 
-        // Inicializar adapter com lista vazia
-        adapter = StudentAdapter(emptyList())
+        // Inicializar adapter com lista vazia e listener
+        adapter = StudentAdapter(emptyList()) { student ->
+            showStudentDetails(student)
+        }
         recyclerView.adapter = adapter
 
         fetchStudents()
@@ -53,7 +54,9 @@ class StudentListActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     val students = response.body()
                     if (!students.isNullOrEmpty()) {
-                        adapter = StudentAdapter(students)
+                        adapter = StudentAdapter(students) { student ->
+                            showStudentDetails(student)
+                        }
                         recyclerView.adapter = adapter
                     } else {
                         Toast.makeText(this@StudentListActivity, "No students found", Toast.LENGTH_SHORT).show()
@@ -69,13 +72,25 @@ class StudentListActivity : AppCompatActivity() {
         })
     }
 
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        return when (item.itemId) {
-            android.R.id.home -> {
-                onBackPressed()
-                true
+    private fun showStudentDetails(student: Student) {
+        // Exibe os detalhes em um AlertDialog
+        val message = """
+            Nome: ${student.name}
+            RA: ${student.ra}
+            CEP: ${student.zip}
+            Rua: ${student.street}
+            Complemento: ${student.complement}
+            Bairro: ${student.neighborhood}
+            Cidade: ${student.city}
+            Estado: ${student.state}
+        """.trimIndent()
+
+        AlertDialog.Builder(this)
+            .setTitle("Detalhes do Estudante")
+            .setMessage(message)
+            .setPositiveButton("Fechar") { dialog, _ ->
+                dialog.dismiss()
             }
-            else -> super.onOptionsItemSelected(item)
-        }
+            .show()
     }
 }
